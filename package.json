@@ -1,0 +1,93 @@
+{
+  "name": "pkm-system-enhanced",
+  "version": "2.0.0",
+  "description": "Enhanced PKM System with Multi-Parent Notes and Rich Media",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run dev:react\" \"wait-on http://localhost:3000 && cross-env NODE_ENV=development electron .\"",
+    "dev:react": "vite",
+    "build": "vite build",
+    "package": "electron-builder"
+  },
+  "keywords": [
+    "pkm",
+    "notes",
+    "flashcards",
+    "spaced-repetition",
+    "obsidian"
+  ],
+  "author": "PKM System",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^39.1.0",
+    "electron-builder": "^24.9.1",
+    "vite": "^7.2.0",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.2",
+    "lucide-react": "^0.298.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sql.js": "^1.10.3",
+    "ts-fsrs": "^5.2.3"
+  },
+  "build": {
+    "appId": "com.pkm.system.enhanced",
+    "productName": "PKM System",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js",
+      "package.json",
+      "node_modules/**/*",
+      "!node_modules/**/*.{md,ts,map}",
+      "!node_modules/.cache"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/sql.js/dist/sql-wasm.wasm",
+        "to": "sql-wasm.wasm"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Office"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
